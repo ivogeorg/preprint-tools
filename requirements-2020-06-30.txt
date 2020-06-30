@@ -1,0 +1,17 @@
+beautifulsoup4==4.9.1
+boto3==1.14.13
+botocore==1.17.13
+bs4==0.0.1
+certifi==2020.6.20
+DateTime==4.3
+docutils==0.15.2
+jmespath==0.10.0
+lxml==4.5.1
+python-dateutil==2.8.1
+pytz==2020.1
+s3transfer==0.3.3
+six==1.15.0
+soupsieve==2.0.1
+tqdm==4.47.0
+urllib3==1.25.9
+zope.interface==5.1.0

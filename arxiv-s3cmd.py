@@ -22,7 +22,7 @@ def setup():
     print('Connecting to Amazon S3...')
 
     # Securely import configs from private config file
-    configs = configparser.SafeConfigParser()
+    configs = configparser.ConfigParser()
     configs.read('config.ini')  # TODO: Use the standard .s3cmd file
 
     # Create S3 resource & set configs
@@ -103,6 +103,7 @@ def begin_download():
         Prefix='src/'
     )
 
+    # TODO: Extraction should be an option
     # Download and extract tars
     numFiles = 0
     for page in page_iterator:
@@ -130,4 +131,4 @@ if __name__ == '__main__':
 
     # TODO: Create a 'dry-run' option (i.e. w/o actual download)
     # Begin tar download & extraction 
-    # begin_download()
+    begin_download()
