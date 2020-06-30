@@ -1,10 +1,18 @@
 # Acknowledgement: Brienna Herold, http://briennakh.me/notes/bulk-arxiv-download
 
-import boto3, configparser, os, botocore, json
+import boto3
+import configparser
+import os
+import botocore
+import json
+import tqdm
+
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+# TODO: Remove globals
 s3resource = None
+
 
 def setup():
     """Creates S3 resource & sets configs to enable download."""
@@ -13,7 +21,7 @@ def setup():
 
     # Securely import configs from private config file
     configs = configparser.SafeConfigParser()
-    configs.read('config.ini')
+    configs.read('config.ini')  # TODO: Use the standard .s3cmd file
 
     # Create S3 resource & set configs
     global s3resource
@@ -23,6 +31,7 @@ def setup():
         aws_secret_access_key=configs['DEFAULT']['SECRET_KEY'],
         region_name='us-east-1'  # same region arxiv bucket is in
     )
+
 
 def download_file(key):
     """
@@ -35,7 +44,7 @@ def download_file(key):
     """
 
     # Ensure src directory exists 
-    if not os.path.isdir('src'):
+    if not os.path.isdir('src'):  # TODO: Make a command-line parameter (pdf, src)
         os.makedirs('src')
 
     # Download file
@@ -50,6 +59,7 @@ def download_file(key):
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
             print('ERROR: ' + key + " does not exist in arxiv bucket")
+
 
 def explore_metadata():
     """Explores arxiv bucket metadata."""
@@ -75,6 +85,7 @@ def explore_metadata():
 
     print('')
 
+
 def begin_download():
     """Sets up download of tars from arxiv bucket."""
 
@@ -98,9 +109,10 @@ def begin_download():
             key = file['Key']
             # If current file is a tar
             if key.endswith('.tar'):
-                download_file(key)
+                download_file(key)  # TODO: Make target directory a cmd line parameter
             
     print('Processed ' + str(numFiles - 1) + ' tars')  # -1 
+
 
 if __name__ == '__main__':
     """Runs if script is called on command line"""
@@ -114,5 +126,6 @@ if __name__ == '__main__':
     # Explore bucket metadata 
     explore_metadata()
 
+    # TODO: Create a 'dry-run' option (i.e. w/o actual download)
     # Begin tar download & extraction 
     begin_download()
