@@ -1,4 +1,6 @@
+# File: arxiv-s3cmd.py
 # Acknowledgement: Brienna Herold, http://briennakh.me/notes/bulk-arxiv-download
+# Date: 2020-06-30
 
 import boto3
 import configparser
@@ -128,4 +130,4 @@ if __name__ == '__main__':
 
     # TODO: Create a 'dry-run' option (i.e. w/o actual download)
     # Begin tar download & extraction 
-    begin_download()
+    # begin_download()
