@@ -45,9 +45,9 @@ def download_file(key):
         Name of file to download
     """
 
-    # Ensure src directory exists 
-    if not os.path.isdir('src'):  # TODO: Make a command-line parameter (pdf, src)
-        os.makedirs('src')
+    # Ensure pdf directory exists
+    if not os.path.isdir('pdf'):  # TODO: Make a command-line parameter (pdf, src)
+        os.makedirs('pdf')
 
     # Download file
     print('\nDownloading s3://arxiv/{} to {}...'.format(key, key))
@@ -68,11 +68,11 @@ def explore_metadata():
 
     print('\narxiv bucket metadata:')
 
-    with open('src/arXiv_src_manifest.xml', 'r') as manifest:  # TODO: Parameter (pdf, src)
+    with open('pdf/arXiv_pdf_manifest.xml', 'r') as manifest:  # TODO: Parameter (pdf, src)
         soup = BeautifulSoup(manifest, 'xml')
 
         # Print last time the manifest was edited
-        timestamp = soup.arXivSRC.find('timestamp', recursive=False).string
+        timestamp = soup.arXivPDF.find('timestamp', recursive=False).string
         print('Manifest was last edited on ' + timestamp)
 
         # Print number of files in bucket
@@ -100,15 +100,15 @@ def download():
     page_iterator = paginator.paginate(
         Bucket='arxiv',
         RequestPayer='requester',
-        Prefix='src/'
+        Prefix='pdf/'
     )
 
     # TODO: Extraction should be an option
     # Download and extract tars
     num_files = 0
-    for page in tqdm(page_iterator):  # TODO: The command line UI has to be improved (a la gpustat)
+    for page in tqdm.tqdm(page_iterator):  # TODO: The command line UI has to be improved (a la gpustat)
         num_files = num_files + len(page['Contents'])
-        for file in tqdm(page['Contents']):  # TODO: Many other things here (e.g. MD5 verification)
+        for file in tqdm.tqdm(page['Contents']):  # TODO: Many other things here (e.g. MD5 verification)
             key = file['Key']
             # If current file is a tar
             if key.endswith('.tar'):
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     setup()
 
     # Download manifest file to current directory
-    download_file('src/arXiv_src_manifest.xml')
+    download_file('pdf/arXiv_pdf_manifest.xml')
 
     # Explore bucket metadata 
     explore_metadata()
