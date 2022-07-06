@@ -6,7 +6,7 @@ certifi==2020.6.20
 DateTime==4.3
 docutils==0.15.2
 jmespath==0.10.0
-lxml==4.5.1
+lxml==4.9.1
 python-dateutil==2.8.1
 pytz==2020.1
 s3transfer==0.3.3
