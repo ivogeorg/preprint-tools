@@ -2,7 +2,7 @@ beautifulsoup4==4.9.1
 boto3==1.14.13
 botocore==1.17.13
 bs4==0.0.1
-certifi==2020.6.20
+certifi==2022.12.7
 DateTime==4.3
 docutils==0.15.2
 jmespath==0.10.0
